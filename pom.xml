@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ar.com.jwt.base</groupId>
+	<artifactId>jwt</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>TGV-JAVA-JSON-Web-Tokens</name>
+
+	<!-- Properties and Versions -->
+	<properties>
+
+		<version.javax.inject>1</version.javax.inject>
+		<version.servlet.api>2.5</version.servlet.api>
+		<version.org.springframework>4.2.5.RELEASE</version.org.springframework>
+		<version.org.springframework.security>4.0.4.RELEASE</version.org.springframework.security>
+		<version.org.springframework.batch>2.2.2.RELEASE</version.org.springframework.batch>
+		<version.aspectj.weaver>1.7.4</version.aspectj.weaver>
+		<version.apache.log4j>1.2.13</version.apache.log4j>
+		<version.jackson>2.3.0</version.jackson>
+		<version.jackson.jackson-datatype-hibernate4>2.2.3</version.jackson.jackson-datatype-hibernate4>
+		<version.jackson.databind>2.2.3</version.jackson.databind>
+		<version.slf4j>1.5.6</version.slf4j>
+		<version.jjwt>0.6.0</version.jjwt>
+		<!-- plugin versions -->
+		<version.surefire>2.5</version.surefire>
+		<version.maven.compiler>2.3.2</version.maven.compiler>
+		<version.sonar>2.1</version.sonar>
+		<version.javadoc>2.9.1</version.javadoc>
+		<version.umlgraph>5.6</version.umlgraph>
+		<version.war.plugin>2.4</version.war.plugin>
+		<!-- Platform -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- Application properties -->
+		<app.conf.properties.secret>MySoLovely_secret_key_for_jwt</app.conf.properties.secret>
+		<app.conf.properties.expiration>604800</app.conf.properties.expiration>
+		<app.conf.properties.authorisation.header>Authorization</app.conf.properties.authorisation.header>
+	</properties>
+
+
+	<!-- Dependencies descriptor for modules -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${version.servlet.api}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${version.jackson}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-hibernate4</artifactId>
+				<version>${version.jackson.jackson-datatype-hibernate4}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${version.jackson.databind}</version>
+			</dependency>
+			<!-- SLF - Log4j dependencies -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${version.slf4j}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${version.slf4j}</version>
+			</dependency>
+			<!-- Log4j dependencies -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${version.apache.log4j}</version>
+			</dependency>
+			<!-- Java inject -->
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${version.javax.inject}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- Spring based dependencies -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.batch</groupId>
+				<artifactId>spring-batch-core</artifactId>
+				<version>${version.org.springframework.batch}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${version.org.springframework.security}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${version.org.springframework.security}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${version.org.springframework.security}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${version.org.springframework}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${version.aspectj.weaver}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>${version.jjwt}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<!-- Plugin descriptor for all modules -->
+		<pluginManagement>
+			<plugins>
+				<!-- SureFire Plugin -->
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${version.surefire}</version>
+					<configuration>
+						<forkMode>once</forkMode>
+						<argLine>-enableassertions</argLine>
+					</configuration>
+				</plugin>
+				<!-- Sonar plugin for sonar analisys -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>${version.sonar}</version>
+				</plugin>
+				<!-- Javadoc plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${version.javadoc}</version>
+				</plugin>
+				<!-- maven compiler plugin -->
+				<plugin>
+					<inherited>true</inherited>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${version.maven.compiler}</version>
+				</plugin>
+				<!-- maven war plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${version.war.plugin}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<!-- plugins for active project -->
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+					<docletArtifact>
+						<groupId>org.umlgraph</groupId>
+						<artifactId>umlgraph</artifactId>
+						<version>${version.umlgraph}</version>
+					</docletArtifact>
+					<additionalparam>-views -all</additionalparam>
+					<useStandardDocletOptions>true</useStandardDocletOptions>
+					<aggregate>true</aggregate>
+					<stylesheetfile>${basedir}/src/javadoc/stylesheet.css</stylesheetfile>
+					<javadocDirectory>${basedir}/src/javadoc</javadocDirectory>
+					<docfilessubdirs>true</docfilessubdirs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- Reporting output -->
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${version.javadoc}</version>
+				<configuration>
+					<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+					<docletArtifact>
+						<groupId>org.umlgraph</groupId>
+						<artifactId>umlgraph</artifactId>
+						<version>${version.umlgraph}</version>
+					</docletArtifact>
+					<additionalparam>-views -all</additionalparam>
+					<useStandardDocletOptions>true</useStandardDocletOptions>
+					<aggregate>true</aggregate>
+					<stylesheetfile>${basedir}/src/javadoc/stylesheet.css</stylesheetfile>
+					<javadocDirectory>${basedir}/src/javadoc</javadocDirectory>
+					<docfilessubdirs>true</docfilessubdirs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>${version.surefire}</version>
+			</plugin>
+		</plugins>
+	</reporting>
+	<modules>
+		<module>jwt-base-server</module>
+	</modules>
+</project>

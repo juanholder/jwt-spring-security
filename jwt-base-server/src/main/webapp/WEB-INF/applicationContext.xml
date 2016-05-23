@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/security 
+    http://www.springframework.org/schema/security/spring-security-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+    http://www.springframework.org/schema/integration 
+    http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+	<!-- Scan the whole packages in order to find Spring annotated components. -->
+	<context:component-scan base-package="ar.com.jwt.base" />
+
+	<!-- Properties Mapping for many system static parameters -->
+	<context:property-placeholder location="classpath:project.properties" />
+
+	<!-- Stateless HTTP spring security configuration -->
+	<http auto-config="true" create-session="stateless">
+		<intercept-url pattern="/api/secur*" access="permitAll" />
+		<intercept-url pattern="/api/business/*" access="hasRole('USER')" />
+		<intercept-url pattern="/api/admin/*" access="hasRole('ADMIN')" />
+		<csrf disabled="true" />
+		<custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter" />
+	</http>
+
+	<!-- The authenticator filter. -->
+	<beans:bean id="jwtAuthenticationFilter"
+		class="ar.com.jwt.base.server.security.filter.JwtAuthenticationTokenFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="tokenHeader"
+			value="${conf.properties.authorisation.header}" />
+	</beans:bean>
+
+	<!-- the authentication manager. -->
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider>
+			<!-- Dummy users/pass/roles -->
+			<user-service>
+				<user name="bill" password="bill" authorities="ROLE_USER" />
+				<user name="admin" password="admin" authorities="ROLE_ADMIN,ROLE_USER" />
+				<user name="sadmin" password="sadmin" authorities="ROLE_SADMIN,ROLE_ADMIN,ROLE_USER" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+
+	<!-- Spring MVC resolvers -->
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<beans:bean
+				class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
+			<beans:bean
+				class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
+		</mvc:argument-resolvers>
+		<mvc:message-converters>
+			<beans:bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<beans:property name="prettyPrint" value="true" />
+			</beans:bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+</beans:beans>
