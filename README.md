@@ -31,6 +31,6 @@ So we have 2 main group of methods, the security methods and the business method
 Security methods
 
 | HTTP Method| relative path| headers | Comments |
-| ------------- |:-------------:| -----:| -----:|
+| :-------------: |:-------------:| -----| -----|
 | POST | /security/auth | Accept: application/json, Content-Type: application/json | requires a json body with username and password as properties. A new token is returned in case of succesful login  |
 | GET | /security/refresh | Accept: application/json, Content-Type: application/json,Authorization: [current jwt token] | refresh the token returning another valid token|
