@@ -30,7 +30,52 @@ So we have 2 main group of methods, the security methods and the business method
 
 Security methods
 
-| HTTP Method| relative path| headers | Comments |
+| HTTP Method| Relative path| Headers | Comments |
 | :-------------: |:-------------:| -----| -----|
-| POST | /security/auth | Accept: application/json, Content-Type: application/json | requires a json body with username and password as properties. A new token is returned in case of succesful login  |
-| GET | /security/refresh | Accept: application/json, Content-Type: application/json,Authorization: [current jwt token] | refresh the token returning another valid token|
+| POST | /security/auth | Accept: application/json, Content-Type: application/json | Requires a json body with username and password as properties. A new token is returned in case of succesful login  |
+| GET | /security/refresh | Accept: application/json, Content-Type: application/json,Authorization: [current jwt token] | Refresh the token returning another valid token|
+
+Business methods
+
+| HTTP Method| Relative path| Headers | Comments |
+| :-------------: |:-------------:| -----| -----|
+| GET | /business/myBusinessMethod |Accept: application/json, Content-Type: application/json,Authorization: [current jwt token] | Invoke user role granted method |
+| GET | /admin/myAdminMethod | Accept: application/json, Content-Type: application/json,Authorization: [current jwt token] | Invoke an admin role granted method|
+
+**User and Roles**
+
+The users and roles are declared in the applicationContext.xml spring descriptor.
+
+The default configuration is the following:
+
+~~~
+	<!-- the authentication manager. -->
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider>
+			<!-- Dummy users/pass/roles -->
+			<user-service>
+				<user name="bill" password="bill" authorities="ROLE_USER" />
+				<user name="admin" password="admin" authorities="ROLE_ADMIN,ROLE_USER" />
+				<user name="sadmin" password="sadmin" authorities="ROLE_SADMIN,ROLE_ADMIN,ROLE_USER" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+~~~
+
+**Misc.**
+
+User & Pass json body example:
+
+~~~
+{
+    "username":"admin",
+    "password": "admin"
+}
+~~~
+
+New toke response example:
+~~~
+{
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTQ2NDQxODIwNzE2NiwiZXhwIjoxNDY1MDIzMDA3fQ.Ltp56b8zHn9TBGwUhPkVkxIMMthpmV8163qK_7x0g16IUkoP86OjtRDZKalma7cwkGA_j-SEaJ7On2bRSncoGQ"
+}
+~~~
